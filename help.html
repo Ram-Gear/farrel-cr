@@ -6,6 +6,8 @@
 <header class="site-header"><div class="brand"><img class="app-icon" src="icon-header.svg" width="46" height="46" alt="Farrel CR icon">
 <div><div class="company">Ram-Gear Manufacturing Inc.</div><h1>Farrel CR <span class="sub">Help &amp; practice</span></h1></div></div>
 <nav class="header-actions"><a class="btn" href="index.html">Back to app</a></nav></header>
+<div class="print-only print-head"><div class="ptitle">Farrel CR – Comparator Readings to CTTT @ PDE &amp; CTTT @ PD – Help &amp; practice</div><div class="pmeta">Ram-Gear Manufacturing Inc. · Printed <span class="pdate"></span></div></div>
+
 <main class="help-main">
 <section class="card" id="video"><h2>Watch how it works</h2>
 <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start">
@@ -23,6 +25,8 @@
 <p><a href="https://grok.com/?q=Explain%20gear%20abbreviations%20DPT%2C%20PAT%2C%20PATE%2C%20HAE%2C%20PDE%2C%20CE%2C%20RC%2C%20CR%2C%20CTTT%2C%20CPT%20and%20backlash%20for%20herringbone%20gears." target="_blank" rel="noopener">Ask Grok: about these terms</a></p></section>
 <section class="card"><h2>Notes on the original</h2>
 <p class="flag">This app reproduces all 37 formula cells of the spreadsheet with its rounded constants (π = 3.141592654, 0.017453293, 57.29577951). As in the original, MAX X comes from MIN CR, and BL MAX is computed from the MIN tooth thicknesses (BL MIN from the MAX).</p></section>
+<div class="print-only print-credit">Original program by Roger Blake, R.C. Blake Company (“Solving the Farrel Formula ST DPT PAT”, ref. Farrel Gear Manual #610A pp. 45 &amp; 46). Browser version by Ram-Gear Manufacturing Inc.</div>
 </main>
 <footer class="site-footer">Original program by Roger Blake, R.C. Blake Company. Browser version by Ram-Gear Manufacturing Inc.</footer>
+<script>(function(){const s=()=>{const d=new Date().toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"});document.querySelectorAll(".pdate").forEach(e=>e.textContent=d)};s();let o=[];addEventListener("beforeprint",()=>{s();o=[...document.querySelectorAll(".practice details:not([open])")];o.forEach(d=>d.open=true)});addEventListener("afterprint",()=>{o.forEach(d=>d.open=false);o=[]})})();</script>
 </body></html>

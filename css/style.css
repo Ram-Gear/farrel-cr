@@ -127,3 +127,23 @@ table.results td.num,table.results th.num{text-align:right;font-family:var(--mon
 .practice details{margin-top:.4rem}
 .flag{color:var(--warn);font-size:.85rem}
 .help-main{max-width:900px;margin:0 auto;padding:1rem 1.4rem}
+
+/* Farrel print */
+@media print{
+  .site-header,.header-actions,nav,button,.btn,.actions,.err:empty,a[href^="https://grok.com"],#video{display:none!important}
+  html,body,.card,main{background:#fff!important;color:#000}
+  .print-head{display:block;border-bottom:2px solid #000;padding-bottom:.3rem;margin-bottom:.6rem}
+  .print-head .pmeta{font-size:9pt}
+  .print-credit{display:block;margin-top:.8rem;border-top:1px solid #999;padding-top:.3rem;font-size:8.5pt}
+  .card,.practice,.results,.field,tr{break-inside:avoid}
+  .help-main{padding:0;max-width:none}
+  input{border:1px solid #999!important;background:#fff!important;color:#000!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .practice details>*{display:block}
+  .results tr[style]{outline:none!important;background:#fff!important}
+  #form{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 .8rem}
+  #form .field{margin:.1rem 0}
+  #form input{padding:.1rem .3rem}
+  #form .err{grid-column:1/-1}
+  .help-main .card,.help-main .results{break-inside:auto}
+  .help-main h2,.help-main h3{break-after:avoid}
+}
