@@ -7,6 +7,11 @@
 <div><div class="company">Ram-Gear Manufacturing Inc.</div><h1>Farrel CR <span class="sub">Help &amp; practice</span></h1></div></div>
 <nav class="header-actions"><a class="btn" href="index.html">Back to app</a></nav></header>
 <main class="help-main">
+<section class="card" id="video"><h2>Watch how it works</h2>
+<div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start">
+<video controls preload="metadata" style="flex:1 1 420px;max-width:100%;border-radius:6px;background:#000"><source src="media/farrel-cr-help.mp4" type="video/mp4">Your browser can't play this video. <a href="media/farrel-cr-help.mp4">Download it</a>.</video>
+<ol style="flex:1 1 260px;margin:0;padding-left:1.3rem"><li>Open <b>Farrel CR</b>.</li><li>Gearset basics: DPT <b>2.5</b>, NP <b>33</b>, NG <b>142</b>, PAT <b>20°</b>, HA <b>30°</b>.</li><li>CE <b>35</b>, ODP <b>14.16</b>, ODG <b>57.12</b>.</li><li>CRP <b>−0.004 / 0.000</b>, CRG <b>0.022 / 0.027</b>, then press <b>Load example</b>.</li><li>Read CTTTP @ PDPE <b>0.7477</b> max / <b>0.7448</b> min and CTTTG @ PDGE <b>0.4958</b> / <b>0.4922</b>.</li><li>Check CTTT @ PD and BL <b>0.0170</b> max / <b>0.0113</b> min (max BL comes from the min thicknesses).</li><li>Use the practice boxes, glossary and Ask Grok links on this page.</li></ol></div></section>
+
 <section class="card"><h2>What it does</h2>
 <p>For a stub tooth (A = AB = 0.8/DPT) herringbone gearset, Farrel CR takes the blank data, operating center distance and the drawing's MIN/MAX <b>comparator readings</b> (CRP, CRG) and uses the <b>Farrel formula</b> (Farrel Gear Manual #610A, pp. 45 &amp; 46) to compute <b>CTTT @ PDE</b>, <b>CTTT @ PD</b> for pinion and gear, and the resulting <b>backlash</b> range.</p>
 <p><code>CTTT @ PDE = PDE · (((π/2 + 2·TANPAT·X·DPT) / N) + INVPAT − INVPATE)</code>, with <code>X = ((OD − PD)/2) − AB − CR</code>.</p>
