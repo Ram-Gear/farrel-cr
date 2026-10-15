@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Farrel CR – Comparator Readings to CTTT @ PDE &amp; PD | Ram-Gear Manufacturing</title>
+<link rel="icon" type="image/svg+xml" href="icon.svg"><link rel="icon" type="image/png" href="favicon.png"><link rel="icon" href="favicon.ico" sizes="any"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css"></head>
+<body>
+<header class="site-header">
+  <div class="brand"><img class="app-icon" src="icon.svg" width="46" height="46" alt="Farrel CR icon">
+    <div><div class="company">Ram-Gear Manufacturing Inc.</div>
+    <h1>Farrel CR <span class="sub">Comparator Readings → CTTT @ PDE &amp; CTTT @ PD</span></h1></div></div>
+  <nav class="header-actions">
+    <button type="button" class="btn" onclick="window.print()">Print</button>
+    <a class="btn btn-ghost" href="help.html">Help</a>
+    <a class="btn btn-ghost" href="https://grok.com/?q=I%27m%20using%20Ram-Gear%27s%20Farrel%20CR%20app%2C%20a%20browser%20rebuild%20of%20Roger%20Blake%27s%20spreadsheet%20that%20uses%20the%20Farrel%20formula%20to%20convert%20comparator%20readings%20(CRP%2C%20CRG)%20to%20circular%20tooth%20thickness%20CTTT%20at%20PDE%20and%20PD%20and%20backlash%20for%20stub%20tooth%20herringbone%20gearsets.%20Can%20you%20give%20me%20pointers%20on%20how%20to%20use%20it%3F" target="_blank" rel="noopener" title="Ask Grok how to use Farrel CR (opens in a new tab)">Ask Grok</a>
+  </nav>
+</header>
+<main class="layout">
+<section class="card" aria-labelledby="inT">
+  <div class="card-head"><h2 id="inT">Gearset data</h2><span class="units">inch · stub tooth DPT/PAT · AB = 0.8/DPT</span></div>
+  <form id="form" autocomplete="off">
+    <div class="field"><label for="D23">DPT <small>(transverse diametral pitch)</small></label><div class="inp"><input id="D23" inputmode="decimal"></div></div>
+    <div class="field"><label for="D24">NP <small>(pinion teeth)</small></label><div class="inp"><input id="D24" inputmode="numeric"></div></div>
+    <div class="field"><label for="D25">NG <small>(gear teeth)</small></label><div class="inp"><input id="D25" inputmode="numeric"></div></div>
+    <div class="field"><label for="D26">PAT <small>(transverse pressure angle)</small></label><div class="inp"><input id="D26" inputmode="decimal"><span class="u">deg</span></div></div>
+    <div class="field"><label for="D27">HA <small>(helix angle)</small></label><div class="inp"><input id="D27" inputmode="decimal"><span class="u">deg</span></div></div>
+    <div class="field"><label for="D28">CE <small>(operating center distance)</small></label><div class="inp"><input id="D28" inputmode="decimal"><span class="u">in</span></div></div>
+    <div class="field"><label for="D29">ODP</label><div class="inp"><input id="D29" inputmode="decimal"><span class="u">in</span></div></div>
+    <div class="field"><label for="D30">ODG</label><div class="inp"><input id="D30" inputmode="decimal"><span class="u">in</span></div></div>
+    <div class="field"><label for="D31">MIN. CRP</label><div class="inp"><input id="D31" inputmode="decimal"><span class="u">in</span></div></div>
+    <div class="field"><label for="D32">MAX. CRP</label><div class="inp"><input id="D32" inputmode="decimal"><span class="u">in</span></div></div>
+    <div class="field"><label for="D33">MIN. CRG</label><div class="inp"><input id="D33" inputmode="decimal"><span class="u">in</span></div></div>
+    <div class="field"><label for="D34">MAX. CRG</label><div class="inp"><input id="D34" inputmode="decimal"><span class="u">in</span></div></div>
+    <div class="err" id="err"></div>
+    <div class="actions"><button type="submit" class="btn btn-primary">Calculate</button>
+      <button type="button" class="btn btn-ghost" id="btnExample">Load example (sheet values)</button></div>
+  </form>
+</section>
+<section class="card" aria-labelledby="rT">
+  <div class="card-head"><h2 id="rT">Results</h2></div>
+  <div id="out"></div>
+  <p><small>CTTT @ PDE = PDE · ((π/2 + 2·TANPAT·X·DPT)/N + INVPAT − INVPATE)<br>X = ((OD − PD)/2) − AB − CR<br>BL = (CPT @ PDE − CTTTP @ PDPE − CTTTG @ PDGE) · COSHAE<br>CTTT @ PD = PD · ((CTTT @ PDE / PDE) − INVPAT + INVPATE)</small></p>
+</section>
+</main>
+<footer class="site-footer">Original program by Roger Blake, R.C. Blake Company (“Solving the Farrel Formula ST DPT PAT”, ref. Farrel Gear Manual #610A pp. 45 &amp; 46, rev. 27 Jul 14). Browser version by Ram-Gear Manufacturing Inc. Answers should be used only with the judgment and approval of a qualified, experienced gear engineer.</footer>
+<script src="calc.js"></script>
+<script>
+const F=FarrelCR.INPUTS;const f=(x,d)=>Number.isFinite(x)?x.toFixed(d):'—';
+function load(o){F.forEach(k=>document.getElementById(k).value=o[k]);}
+function run(e){e&&e.preventDefault();const err=document.getElementById('err');err.textContent='';const inp={};
+ for(const k of F){const v=parseFloat(document.getElementById(k).value);if(!Number.isFinite(v)){err.textContent='Enter a number in every field.';return;}
+  if(!['D31','D32','D33','D34'].includes(k)&&v<=0){err.textContent='DPT, teeth, angles, CE and ODs must be positive.';return;}inp[k]=v;}
+ if(inp.D31>inp.D32||inp.D33>inp.D34){err.textContent='MIN CR must not exceed MAX CR.';return;}
+ const c=FarrelCR.calc(inp);
+ const row=(a,k1,k2,d,big)=>'<tr><td>'+a+'</td><td class="num">'+(big?'<span class="big">':'')+f(c[k1],d)+(big?'</span>':'')+'</td><td class="num">'+(big?'<span class="big">':'')+f(c[k2],d)+(big?'</span>':'')+'</td></tr>';
+ const one=(a,k,d)=>'<tr><td>'+a+' <small>'+k+'</small></td><td class="num">'+f(c[k],d)+'</td></tr>';
+ const head=t=>'<table class="results"><thead><tr><th>'+t+'</th><th class="num">MAX</th><th class="num">MIN</th></tr></thead><tbody>';
+ let h=head('Circular tooth thickness')+row('<b>CTTTP @ PDPE</b>','F37','G37',4,1)+row('<b>CTTTG @ PDGE</b>','F38','G38',4,1)+row('<b>CTTTP @ PDP</b>','F40','G40',4,1)+row('<b>CTTTG @ PDG</b>','F41','G41',4,1)+row('<b>BL</b> <small>(×COSHAE; MAX from MIN CTTTs)</small>','F43','G43',4,1)+'</tbody></table>';
+ h+=head('X values')+row('XP','F33','G33',4)+row('XG','F34','G34',4)+'</tbody></table>';
+ h+='<details><summary>Working values (spreadsheet cells)</summary><table class="results"><tbody>';
+ [['PDP','F23'],['PDG','F24'],['AP = (ODP−PDP)/2','F25'],['AG = (ODG−PDG)/2','F26'],['A = 0.8/DPT','F27'],['AB','F28'],['C','F29'],['RC = CE/C','F30'],['PDPE','I23'],['PDGE','I24'],['π/2','I25'],['TANPAT','I26'],['COSPAT','I27'],['PATE','I28'],['TANPATE','I29'],['COSHA','I30'],['TANHA','I31'],['HAE','I32'],['COSHAE','I33'],['INVPAT','I34'],['INVPATE','I35'],['CPT @ PD','I36'],['CPT @ PDE','I37']].forEach(([a,k])=>h+=one(a,k,8));
+ h+='</tbody></table></details>';
+ document.getElementById('out').innerHTML=h;}
+document.getElementById('form').addEventListener('submit',run);
+document.getElementById('btnExample').onclick=()=>{load(FarrelCR.EXAMPLE);run();};
+load(FarrelCR.EXAMPLE);run();
+</script>
+</body></html>
